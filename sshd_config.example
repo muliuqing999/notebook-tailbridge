@@ -1,0 +1,22 @@
+# Standalone example. Start with sshd -f using the absolute path to this file.
+# Use the platform's approved SSH user. This example permits non-root users.
+Port 22222
+ListenAddress 127.0.0.1
+HostKey /etc/ssh/ssh_host_ed25519_key
+PidFile /run/sshd-private-access.pid
+
+# The corresponding public key belongs in the login user's authorized_keys.
+PermitRootLogin no
+PubkeyAuthentication yes
+AuthenticationMethods publickey
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+AuthorizedKeysFile .ssh/authorized_keys
+StrictModes yes
+
+# Enable local forwarding for VS Code Remote-SSH and local Jupyter access.
+AllowTcpForwarding local
+AllowAgentForwarding no
+GatewayPorts no
+X11Forwarding no
+Subsystem sftp internal-sftp
